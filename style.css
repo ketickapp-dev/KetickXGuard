@@ -26,7 +26,7 @@
   --text-faint:  rgba(244,243,248,.38);
   --shadow:      0 24px 60px -24px rgba(0,0,0,.65);
 
-  --blur: 28px;
+  --blur: 20px;
   --r-xl: 28px;
   --r-lg: 22px;
   --r-md: 16px;
@@ -74,15 +74,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .flux-bg .blob {
   position: absolute; border-radius: 50%;
-  filter: blur(70px); opacity: .55;
-  mix-blend-mode: screen;
+  opacity: .6;
+  will-change: transform;
   animation: drift 26s ease-in-out infinite alternate;
 }
-:root[data-theme="light"] .flux-bg .blob { mix-blend-mode: multiply; opacity: .38; }
-.flux-bg .b1 { width: 62vmax; height: 62vmax; left: -18vmax; top: -22vmax; background: radial-gradient(circle at 30% 30%, var(--flux-amber), transparent 65%); }
-.flux-bg .b2 { width: 55vmax; height: 55vmax; right: -20vmax; top: 8vmax;  background: radial-gradient(circle at 60% 40%, var(--flux-violet), transparent 65%); animation-duration: 32s; }
-.flux-bg .b3 { width: 48vmax; height: 48vmax; left: 10vmax; bottom: -24vmax; background: radial-gradient(circle at 50% 50%, var(--flux-coral), transparent 65%); animation-duration: 38s; }
-.flux-bg .b4 { width: 34vmax; height: 34vmax; right: 6vmax; bottom: -8vmax; background: radial-gradient(circle at 50% 50%, var(--flux-cyan), transparent 65%); animation-duration: 29s; }
+:root[data-theme="light"] .flux-bg .blob { opacity: .42; }
+.flux-bg .b1 { width: 62vmax; height: 62vmax; left: -18vmax; top: -22vmax; background: radial-gradient(closest-side, var(--flux-amber), transparent); }
+.flux-bg .b2 { width: 55vmax; height: 55vmax; right: -20vmax; top: 8vmax;  background: radial-gradient(closest-side, var(--flux-violet), transparent); animation-duration: 32s; }
+.flux-bg .b3 { width: 48vmax; height: 48vmax; left: 10vmax; bottom: -24vmax; background: radial-gradient(closest-side, var(--flux-coral), transparent); animation-duration: 38s; }
+.flux-bg .b4 { width: 34vmax; height: 34vmax; right: 6vmax; bottom: -8vmax; background: radial-gradient(closest-side, var(--flux-cyan), transparent); animation-duration: 29s; }
 .flux-bg .grain {
   position: absolute; inset: 0; opacity: .07; pointer-events: none;
   background-image: radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px);
@@ -103,6 +103,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   border: 1px solid var(--glass-edge);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow), inset 0 1px 0 var(--glass-shine);
+}
+
+/* Fallback jika browser tak sokong backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(28,26,40,.88); }
+  :root[data-theme="light"] .glass { background: rgba(255,255,255,.9); }
 }
 
 /* ---------- Dot-matrix digits ---------- */
