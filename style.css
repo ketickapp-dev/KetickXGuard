@@ -1,0 +1,141 @@
+/* =========================================================
+   BizPro v6 — Shared design system
+   Tema: Flux (realme UI) · Digit: dot-matrix (gaya Nothing OS)
+   Semua halaman modul import fail ini: <link rel="stylesheet" href="../style.css">
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@500;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Flux palette */
+  --flux-amber:  #FFB020;
+  --flux-coral:  #FF5E5B;
+  --flux-violet: #7B5CFF;
+  --flux-cyan:   #2EC5FF;
+  --flux-mint:   #3DDC97;
+  --dot-red:     #E5272F;   /* titik merah ala Nothing untuk amaran */
+
+  /* Permukaan (dark default) */
+  --bg:          #08070F;
+  --glass:       rgba(255,255,255,.06);
+  --glass-hi:    rgba(255,255,255,.11);
+  --glass-edge:  rgba(255,255,255,.14);
+  --glass-shine: rgba(255,255,255,.22);
+  --text:        #F4F3F8;
+  --text-dim:    rgba(244,243,248,.62);
+  --text-faint:  rgba(244,243,248,.38);
+  --shadow:      0 24px 60px -24px rgba(0,0,0,.65);
+
+  --blur: 28px;
+  --r-xl: 28px;
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 12px;
+
+  --font-ui:  'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-dot: 'Doto', 'Space Grotesk', monospace;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg:          #EEEAF6;
+  --glass:       rgba(255,255,255,.52);
+  --glass-hi:    rgba(255,255,255,.72);
+  --glass-edge:  rgba(255,255,255,.85);
+  --glass-shine: rgba(255,255,255,.95);
+  --text:        #15131F;
+  --text-dim:    rgba(21,19,31,.64);
+  --text-faint:  rgba(21,19,31,.42);
+  --shadow:      0 24px 50px -28px rgba(60,40,120,.35);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--flux-cyan); outline-offset: 3px; border-radius: 10px; }
+
+/* ---------- Flux fluid background ---------- */
+.flux-bg {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  background: var(--bg);
+}
+.flux-bg .blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(70px); opacity: .55;
+  mix-blend-mode: screen;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+:root[data-theme="light"] .flux-bg .blob { mix-blend-mode: multiply; opacity: .38; }
+.flux-bg .b1 { width: 62vmax; height: 62vmax; left: -18vmax; top: -22vmax; background: radial-gradient(circle at 30% 30%, var(--flux-amber), transparent 65%); }
+.flux-bg .b2 { width: 55vmax; height: 55vmax; right: -20vmax; top: 8vmax;  background: radial-gradient(circle at 60% 40%, var(--flux-violet), transparent 65%); animation-duration: 32s; }
+.flux-bg .b3 { width: 48vmax; height: 48vmax; left: 10vmax; bottom: -24vmax; background: radial-gradient(circle at 50% 50%, var(--flux-coral), transparent 65%); animation-duration: 38s; }
+.flux-bg .b4 { width: 34vmax; height: 34vmax; right: 6vmax; bottom: -8vmax; background: radial-gradient(circle at 50% 50%, var(--flux-cyan), transparent 65%); animation-duration: 29s; }
+.flux-bg .grain {
+  position: absolute; inset: 0; opacity: .07; pointer-events: none;
+  background-image: radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+@keyframes drift {
+  0%   { transform: translate(0,0) scale(1) rotate(0deg); }
+  50%  { transform: translate(6vmax,4vmax) scale(1.12) rotate(25deg); }
+  100% { transform: translate(-4vmax,7vmax) scale(.94) rotate(-15deg); }
+}
+
+/* ---------- Glass surface ---------- */
+.glass {
+  position: relative;
+  background: linear-gradient(155deg, var(--glass-hi), var(--glass) 55%);
+  backdrop-filter: blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow), inset 0 1px 0 var(--glass-shine);
+}
+
+/* ---------- Dot-matrix digits ---------- */
+.dot   { font-family: var(--font-dot); font-weight: 900; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.dot-x { font-size: clamp(2.8rem, 11vw, 4.6rem); line-height: .95; }
+.dot-l { font-size: 1.9rem; line-height: 1; }
+.dot-m { font-size: 1.25rem; line-height: 1; }
+
+.muted { color: var(--text-dim); }
+.faint { color: var(--text-faint); }
+
+/* Titik status ala Nothing */
+.pulse-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--dot-red);
+  box-shadow: 0 0 0 0 rgba(229,39,47,.6);
+  animation: pulse 2.4s infinite;
+}
+.pulse-dot.ok { background: var(--flux-mint); box-shadow: 0 0 0 0 rgba(61,220,151,.6); }
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 currentColor; }
+  70%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Butang ikon bulat */
+.icon-btn {
+  width: 42px; height: 42px; display: grid; place-items: center;
+  border-radius: 50%;
+}
+.icon-btn svg { width: 20px; height: 20px; }
+
+svg.i { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
